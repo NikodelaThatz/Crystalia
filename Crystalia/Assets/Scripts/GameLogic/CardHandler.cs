@@ -28,9 +28,11 @@ public class CardHandler : MonoBehaviour {
 
         //Trova se stessa nella lista di carte complete
         var myList = ListOfCards.instance;
-        for (int i = 0; i < myList.listOfEpansions.Count; i++) {
-            for (int ii = 0; ii < myList.listOfEpansions[i].cards.Count; ii++) {
-                if (myList.listOfEpansions[i].cards[ii] == myCard) {
+        if (myList == null)
+            return;
+        for (int i = 0; i < myList.listOfExpansions.Count; i++) {
+            for (int ii = 0; ii < myList.listOfExpansions[i].cards.Count; ii++) {
+                if (myList.listOfExpansions[i].cards[ii] == myCard) {
                     cardID = ii;
                     expansionID = i;
                     break;

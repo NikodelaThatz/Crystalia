@@ -61,7 +61,7 @@ public class Card : ScriptableObject {
     public enum MagicCharacteristic {
         None, WhiteMagic, BlueMagic, BlackMagic, RedMagic, TimeMagic, Summoner
     }
-    public MagicCharacteristic magicCharacteristic;
+    public MagicCharacteristic magicCharacteristic, secondMagicAttribute;
     //Elemento, da quanto ho capito, un personaggio con un elemeno solo può essere evocato sempre mentre uno che ne ha due, anche simili, deve essere già presente almeno uno con lo stesso elemento in campo
     public enum Elemental {
         Fuoco_1, Ghiaccio_1, Terra_1, Tuono_1, Vento_1,
@@ -89,23 +89,42 @@ public class Card : ScriptableObject {
         None, guardianSoul
     }
     public EffectOnDeath effectOnDeath;
+
+    //Effetto rilascio, attivo lo spell nella mia colonna per usare questo effetto, si attivano tutti e due
+    public enum Release {
+        None, def2_tillEndTurn, returnToHand, nullify1Attack, cardFromTavernUnderCrystal_Die
+    }
+    public Release releaseEffect;
+
     //Effetto quando un alleato nella stessa colonna va KO, questa carta deve essere messa nella zona "Abilità preparata" (magie/istantanee)
     public enum Ambush {
-        None, EnterInGameWhenAlliesDies 
+        None, EnterInGameWhenAlliesDies, cardFromTavernUnderCrystal_Draw1Card
     }
     public Ambush ambushEffect;
 
     //Effetto quando un personaggio è da solo
     public enum WhileAloneEffect {
-        None, atk1, def1, atk1_def1, atk2, def2
+        None, atk1, def1, atk1_def1, atk2, def2, atk3
     }
     public WhileAloneEffect whileAloneEffect;
 
     //Effetto utilizzabile solo dai Superior e dai Legendary, dopo una promozione, la carta, ha i personaggi promossi sotto di sè. Staccane uno per attivare "Fendente dell'anima"
     public enum SoulsSlashEffect {
-        None
+        None, GuardianSoul, SlowAttack, Untap, Def2_tillTurnEnd
     }
     public SoulsSlashEffect soulsSlashEffect;
+
+    public enum SummonRequisite {
+        None, Thief, Fighter, Warrior, Archer, Hunter, Ninja, White_Mage, Summoner
+    }
+    public SummonRequisite summonRequisite;
+
+    [Range(0, 2)]
+    public int attackSpeedType;
+    [Range(0, 2)]
+    public int effectSpeedType;
+    [Range(0, 2)]
+    public int secondaryEffectSpeedType;
     #endregion
 
     public void OnSummon() {

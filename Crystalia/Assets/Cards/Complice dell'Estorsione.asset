@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecda998890e97b7498d227e8f8746e44, type: 3}
+  m_Name: Complice dell'Estorsione
+  m_EditorClassIdentifier: 
+  cardImage: {fileID: 21300000, guid: f0d931b4de70e9b4fb656e2b372bc60b, type: 3}
+  cardName: Complice dell'Estorsione
+  deckType: 0
+  rank: 0
+  tapped: 0
+  attack: 1
+  life: 1
+  defense: 0
+  additionalAttack: 0
+  additionalLife: 0
+  additionalDefense: 0
+  currentAttack: 0
+  currentLife: 0
+  currentDefense: 0
+  characterClass: 1
+  race: 1
+  characterAttribute: 1
+  physicalCaracteristic: 1
+  magicCharacteristic: 0
+  elemental: 4
+  effectOnSummon: 0
+  continuousEffect: 1
+  effectOnKill: 0
+  effectOnDeath: 0
+  releaseEffect: 0
+  ambushEffect: 0
+  whileAloneEffect: 0
+  soulsSlashEffect: 0
+  summonRequisite: 0
+  attackSpeedType: 0
+  effectSpeedType: 0
+  secondaryEffectSpeedType: 0

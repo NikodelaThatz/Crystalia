@@ -10,7 +10,7 @@ public class ListOfCards : MonoBehaviour {
 
     public static ListOfCards instance;
 
-    public List<ListOfExpansions> listOfEpansions;
+    public List<ListOfExpansions> listOfExpansions;
 
     private void Awake() {
         instance = this;
