@@ -92,7 +92,7 @@ public class Card : ScriptableObject {
 
     //Effetto rilascio, attivo lo spell nella mia colonna per usare questo effetto, si attivano tutti e due
     public enum Release {
-        None, def2_tillEndTurn, returnToHand, nullify1Attack, cardFromTavernUnderCrystal_Die
+        None, def2_tillEndTurn, returnToHand, nullify1Attack, cardFromTavernUnderCrystal_KO
     }
     public Release releaseEffect;
 
