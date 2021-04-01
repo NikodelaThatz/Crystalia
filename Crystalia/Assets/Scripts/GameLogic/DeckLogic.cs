@@ -50,6 +50,7 @@ public class DeckLogic : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         if (Input.GetKeyDown(KeyCode.Space)) {
             ShuffleDeck();
         }
+        DeckScaler();
     }
 
     void AddRandomCard() {

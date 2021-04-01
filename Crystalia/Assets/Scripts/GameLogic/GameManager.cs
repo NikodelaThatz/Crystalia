@@ -11,6 +11,10 @@ public class GameManager : MonoBehaviour {
     public bool isAndroidDevice, isWindowsDevice;
 
     public Transform canvasScreen;
+
+    public GameObject cardPrefab;
+
+    public bool promoting, canClash;
     private void Awake() {
         instance = this;
         isAndroidDevice = Application.platform == RuntimePlatform.Android;

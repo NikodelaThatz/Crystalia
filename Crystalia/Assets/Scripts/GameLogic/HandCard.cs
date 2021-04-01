@@ -10,7 +10,8 @@ public class HandCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public bool onClickPosition = false;
 
     public bool pgCard, spellCard, itemCard;
-
+    public bool needPromotion = false;
+    public Card.SummonRequisite requisite;
     bool mouseEnter = false;
     Transform originalParent;
     Vector3 originalPosition;
@@ -19,6 +20,7 @@ public class HandCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public int mycardID, myExpansionID;
     Image myImage;
+    Card myReference;
     private void Awake() {
         originalParent = transform.parent;
         originalIndex = transform.GetSiblingIndex();
@@ -28,6 +30,11 @@ public class HandCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     }
 
     private void Update() {
+        //Referenze varia
+        myReference = ListOfCards.instance.listOfExpansions[myExpansionID].cards[mycardID];
+        requisite = myReference.summonRequisite;   
+
+        //Carta in mano
         if (onClickPosition) {
             myImage.enabled = false;
         } else {
@@ -65,7 +72,6 @@ public class HandCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     }
 
     public void EnterOnMe() {
-       
         if (GameManager.instance.currentCardInMouse == null && !onClickPosition) {
             mouseEnter = true;
             var scale = originalScale;
@@ -92,15 +98,64 @@ public class HandCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void PointerUp() {
         if (onClickPosition) {
             //mouseEnter = false;
-            //Debug, ritorna in mano
+            bool checkedPositionFree = false;
+            bool checkedPositionFreeAsPromotion = false;
+            var cv = CardDragVisualizer.instance;
+            if (cv.mySlot != null) {
+                if (cv.myCard.deckType == Card.DeckType.Deck && cv.mySlot.isPgSlot) {
+                    //La carta è nello slot giusto
+                    if (cv.mySlot.myCardSlot == null) {
+                        //Lo slot è vuoto
+                        if (cv.myCard.rank == Card.Rank.basic) {
+                            //La carta è basic, posso piazzarla
+                            checkedPositionFree = true;
+                        }
+                    } 
+                    if (cv.mySlot.myCardSlot != null && GameManager.instance.promoting) {
+                        //La zona non è vuota, però sto promuovendo. Controllo se posso promuovere.
+                        if (cv.myCard.rank == Card.Rank.superior && cv.mySlot.myCardSlot.rank == Card.Rank.basic) {
+                            //E' possibile promuovere questa carta da basic a superior
+                            checkedPositionFreeAsPromotion = true;
+                            //Invoke: promozione
+                        }
+                        if (cv.myCard.rank == Card.Rank.legendary && cv.mySlot.myCardSlot.rank == Card.Rank.superior) {
+                            //E' possibile promuovere questa carta da superior a legendary
+                            checkedPositionFreeAsPromotion = true;
+                            //Invoke: promozione
+                        }
+                    }
+                }
+            } else {
+                checkedPositionFreeAsPromotion = false;
+                checkedPositionFree = false;
+            }
+
+
+            if (checkedPositionFree) {
+                var prefab = Instantiate(GameManager.instance.cardPrefab, cv.mySlot.transform.position, Quaternion.identity);
+                var newCard = prefab.GetComponent<CardHandler>();
+                newCard.expansionID = myExpansionID;
+                newCard.cardID = mycardID;
+                cv.mySlot.myCardSlot = newCard.myCard;
+                GameManager.instance.currentCardInMouse = null;
+                Destroy(gameObject);
+            }
+
             onClickPosition = false;
-            transform.parent = originalParent;
-            transform.position = originalPosition;
-            transform.SetSiblingIndex(originalIndex);
-            GameManager.instance.currentCardInMouse = null;
+
+
+            if (!checkedPositionFree) {
+                //Slot occupato, o è impossibile mettere questa carta nello slot per qualche ragione (richiede forse una promozione?)
+                transform.parent = originalParent;
+                transform.position = originalPosition;
+                transform.SetSiblingIndex(originalIndex);
+                GameManager.instance.currentCardInMouse = null;
+            }
+
             CardDragVisualizer.instance.cardID = -1;
             CardDragVisualizer.instance.expansionID = -1;
-            //Controllare se è stata posizionata in una zona apposita
+
+
         }
     }
 }

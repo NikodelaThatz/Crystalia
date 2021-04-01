@@ -31,6 +31,7 @@ MonoBehaviour:
   characterAttribute: 2
   physicalCaracteristic: 0
   magicCharacteristic: 1
+  secondMagicAttribute: 0
   elemental: 1
   effectOnSummon: 0
   continuousEffect: 0

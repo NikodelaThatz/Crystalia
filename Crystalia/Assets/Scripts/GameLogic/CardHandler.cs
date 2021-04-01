@@ -21,24 +21,13 @@ public class CardHandler : MonoBehaviour {
     private void Awake() {
         SetUp();
     }
-
+    private void Update() {
+        SetUp();
+    }
     void SetUp() {
         //Setup della carta
+        myCard = ListOfCards.instance.listOfExpansions[expansionID].cards[cardID];
         frontSprite.sprite = myCard.cardImage;
-
-        //Trova se stessa nella lista di carte complete
-        var myList = ListOfCards.instance;
-        if (myList == null)
-            return;
-        for (int i = 0; i < myList.listOfExpansions.Count; i++) {
-            for (int ii = 0; ii < myList.listOfExpansions[i].cards.Count; ii++) {
-                if (myList.listOfExpansions[i].cards[ii] == myCard) {
-                    cardID = ii;
-                    expansionID = i;
-                    break;
-                }
-            }
-        }
     }
 
     void OnHand() {
