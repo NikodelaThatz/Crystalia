@@ -11,4 +11,7 @@ public class BoardSlot : MonoBehaviour {
     public int slotId;
 
     public BoardSlot inFrontOfMe, behindMe;
+
+    public List<GameObject> myCardsOnTop;
+
 }

@@ -114,10 +114,7 @@ public class Card : ScriptableObject {
     }
     public SoulsSlashEffect soulsSlashEffect;
 
-    public enum SummonRequisite {
-        None, Thief, Fighter, Warrior, Archer, Hunter, Ninja, White_Mage, Summoner
-    }
-    public SummonRequisite summonRequisite;
+    public CharacterClass summonRequisite;
 
     [Range(0, 2)]
     public int attackSpeedType;

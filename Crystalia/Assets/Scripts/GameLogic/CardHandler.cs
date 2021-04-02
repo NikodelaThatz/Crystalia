@@ -6,6 +6,9 @@ using Mirror;
 public class CardHandler : MonoBehaviour {
 
     public Card myCard;
+
+    public List<Card> soulCards = new List<Card>();
+
     //L'identificatore della carta
     public int cardID = 0;
     //L'identificatore dell'espansione della carta
@@ -18,6 +21,9 @@ public class CardHandler : MonoBehaviour {
 
     [HideInInspector]
     public NetworkIdentity myNetId, ownerNetId;
+
+
+
     private void Awake() {
         SetUp();
     }

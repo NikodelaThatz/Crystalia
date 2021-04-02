@@ -11,7 +11,7 @@ public class HandCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public bool pgCard, spellCard, itemCard;
     public bool needPromotion = false;
-    public Card.SummonRequisite requisite;
+    public Card.CharacterClass requisite;
     bool mouseEnter = false;
     Transform originalParent;
     Vector3 originalPosition;
@@ -21,6 +21,9 @@ public class HandCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public int mycardID, myExpansionID;
     Image myImage;
     Card myReference;
+
+    public bool showingCard;
+
     private void Awake() {
         originalParent = transform.parent;
         originalIndex = transform.GetSiblingIndex();
@@ -43,9 +46,13 @@ public class HandCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             myImage.sprite = myCard.cardImage;
             myImage.enabled = true;
         }
+        CheckInputMouse();
     }
 
     public void OnPointerDown(PointerEventData eventData) {
+        if (GameManager.instance.isWindowsDevice && !Input.GetMouseButton(0)) {
+            return;
+        }
         if (GameManager.instance.isAndroidDevice && !mouseEnter) {
             var all = FindObjectsOfType<HandCard>();
             for (int i = 0; i < all.Length; i++) {
@@ -71,7 +78,24 @@ public class HandCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         EnterOnMe();
     }
 
+
+    void CheckInputMouse() {
+        if (!mouseEnter)
+            return;
+        if (Input.GetMouseButtonDown(1)) {
+            if (!showingCard) {
+                ShowBigCard.instance.ShowGeneralCardInfo(myReference);
+                showingCard = true;
+            } else {
+                ShowBigCard.instance.HdieGeneralCardInfo();
+                showingCard = false;
+            }
+        }
+        
+    }
+
     public void EnterOnMe() {
+  
         if (GameManager.instance.currentCardInMouse == null && !onClickPosition) {
             mouseEnter = true;
             var scale = originalScale;
@@ -114,14 +138,14 @@ public class HandCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                     if (cv.mySlot.myCardSlot != null && GameManager.instance.promoting) {
                         //La zona non è vuota, però sto promuovendo. Controllo se posso promuovere.
                         if (cv.myCard.rank == Card.Rank.superior && cv.mySlot.myCardSlot.rank == Card.Rank.basic) {
-                            //E' possibile promuovere questa carta da basic a superior
-                            checkedPositionFreeAsPromotion = true;
-                            //Invoke: promozione
+                            if (cv.mySlot.myCardSlot.characterClass == cv.myCard.summonRequisite) {
+                                //E' possibile promuovere questa carta da basic a superior
+                                checkedPositionFreeAsPromotion = true;
+                                //Invoke: promozione
+                            }
                         }
                         if (cv.myCard.rank == Card.Rank.legendary && cv.mySlot.myCardSlot.rank == Card.Rank.superior) {
-                            //E' possibile promuovere questa carta da superior a legendary
-                            checkedPositionFreeAsPromotion = true;
-                            //Invoke: promozione
+
                         }
                     }
                 }
@@ -137,12 +161,30 @@ public class HandCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 newCard.expansionID = myExpansionID;
                 newCard.cardID = mycardID;
                 cv.mySlot.myCardSlot = newCard.myCard;
+                cv.mySlot.myCardsOnTop.Add(newCard.gameObject);
+                GameManager.instance.currentCardInMouse = null;
+                Destroy(gameObject);
+            }
+
+            if (checkedPositionFreeAsPromotion) {
+                var prefab = Instantiate(GameManager.instance.cardPrefab, cv.mySlot.transform.position, Quaternion.identity);
+                var newCard = prefab.GetComponent<CardHandler>();
+                newCard.expansionID = myExpansionID;
+                newCard.cardID = mycardID;
+                for (int i = 0; i < cv.mySlot.myCardsOnTop.Count; i++) {
+                    Vector3 position = cv.mySlot.myCardsOnTop[i].transform.position;
+                    position.x -= 5f * i;
+                    cv.mySlot.myCardsOnTop[i].transform.position = position;
+                }
+                newCard.soulCards.Add(cv.mySlot.myCardSlot);
+                newCard.gameObject.transform.position = new Vector3(newCard.transform.position.x, newCard.transform.position.y, newCard.transform.position.z - 1);
+                cv.mySlot.myCardSlot = newCard.myCard;
+                cv.mySlot.myCardsOnTop.Add(newCard.gameObject);
                 GameManager.instance.currentCardInMouse = null;
                 Destroy(gameObject);
             }
 
             onClickPosition = false;
-
 
             if (!checkedPositionFree) {
                 //Slot occupato, o è impossibile mettere questa carta nello slot per qualche ragione (richiede forse una promozione?)

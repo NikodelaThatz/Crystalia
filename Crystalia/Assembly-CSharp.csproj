@@ -59,15 +59,16 @@
     <Compile Include="Assets\Scripts\GameLogic\Card.cs" />
     <Compile Include="Assets\Scripts\GameLogic\GameManager.cs" />
     <Compile Include="Assets\Scripts\GameLogic\Player.cs" />
+    <Compile Include="Assets\Scripts\GameLogic\BoardSlot.cs" />
     <Compile Include="Assets\Scripts\GameLogic\DeckLogic.cs" />
     <Compile Include="Assets\Scripts\GameLogic\CardHandler.cs" />
     <Compile Include="Assets\Traduzioni\TranslationHandler.cs" />
     <Compile Include="Assets\Scripts\GameLogic\ListOfCards.cs" />
     <Compile Include="Assets\Scripts\GameLogic\HandCard.cs" />
+    <Compile Include="Assets\Scripts\GameLogic\BoardColumnChecker.cs" />
     <Compile Include="Assets\Scripts\GameLogic\CardDragVisualizer.cs" />
     <Compile Include="Assets\Scripts\GameLogic\CardHandVisualizer.cs" />
-    <Compile Include="Assets\Scripts\GameLogic\BoardSlot.cs" />
-    <Compile Include="Assets\Scripts\GameLogic\BoardColumnChecker.cs" />
+    <Compile Include="Assets\Scripts\GameLogic\ShowBigCard.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />
