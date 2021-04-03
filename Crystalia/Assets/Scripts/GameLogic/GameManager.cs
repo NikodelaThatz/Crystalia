@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-
+using Mirror;
 public class GameManager : MonoBehaviour {
 
     public static GameManager instance;
@@ -17,7 +17,9 @@ public class GameManager : MonoBehaviour {
 
     public bool promoting, canClash;
 
-    public List<Event> clash;
+    public List<UnityEvent> clashSlow, clashNormal, clashFast;
+    public List<CardHandler> currentPlayerCards, foesCards;
+    public NetworkIdentity currentTurnPlayer;
 
     private void Awake() {
         instance = this;
@@ -25,6 +27,11 @@ public class GameManager : MonoBehaviour {
         isWindowsDevice = Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.WindowsEditor;
     }
 
+
+    public void StartClash() {
+        
+    
+    }
 
 
 }

@@ -87,7 +87,7 @@ public class HandCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 ShowBigCard.instance.ShowGeneralCardInfo(myReference);
                 showingCard = true;
             } else {
-                ShowBigCard.instance.HdieGeneralCardInfo();
+                ShowBigCard.instance.HideGeneralCardInfo();
                 showingCard = false;
             }
         }
@@ -160,6 +160,7 @@ public class HandCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 var newCard = prefab.GetComponent<CardHandler>();
                 newCard.expansionID = myExpansionID;
                 newCard.cardID = mycardID;
+                newCard.active = true;
                 cv.mySlot.myCardSlot = newCard.myCard;
                 cv.mySlot.myCardsOnTop.Add(newCard.gameObject);
                 GameManager.instance.currentCardInMouse = null;
@@ -175,9 +176,11 @@ public class HandCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                     Vector3 position = cv.mySlot.myCardsOnTop[i].transform.position;
                     position.x -= 5f * i;
                     cv.mySlot.myCardsOnTop[i].transform.position = position;
+                    cv.mySlot.myCardsOnTop[i].GetComponent<CardHandler>().active = false;
                 }
                 newCard.soulCards.Add(cv.mySlot.myCardSlot);
-                newCard.gameObject.transform.position = new Vector3(newCard.transform.position.x, newCard.transform.position.y, newCard.transform.position.z - 1);
+                newCard.gameObject.transform.position = new Vector3(newCard.transform.position.x, newCard.transform.position.y, newCard.transform.position.z - 0.1f);
+                newCard.active = true;
                 cv.mySlot.myCardSlot = newCard.myCard;
                 cv.mySlot.myCardsOnTop.Add(newCard.gameObject);
                 GameManager.instance.currentCardInMouse = null;

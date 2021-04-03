@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\GameLogic\Card.cs" />
     <Compile Include="Assets\Scripts\GameLogic\GameManager.cs" />
+    <Compile Include="Assets\Scripts\GameLogic\ShowBigCard.cs" />
     <Compile Include="Assets\Scripts\GameLogic\Player.cs" />
     <Compile Include="Assets\Scripts\GameLogic\BoardSlot.cs" />
     <Compile Include="Assets\Scripts\GameLogic\DeckLogic.cs" />
@@ -68,7 +69,7 @@
     <Compile Include="Assets\Scripts\GameLogic\BoardColumnChecker.cs" />
     <Compile Include="Assets\Scripts\GameLogic\CardDragVisualizer.cs" />
     <Compile Include="Assets\Scripts\GameLogic\CardHandVisualizer.cs" />
-    <Compile Include="Assets\Scripts\GameLogic\ShowBigCard.cs" />
+    <Compile Include="Assets\Scripts\GameLogic\OnClickDoEvent.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />

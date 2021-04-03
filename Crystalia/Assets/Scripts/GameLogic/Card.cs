@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using Mirror;
 [CreateAssetMenu(fileName = "Card", menuName = "Card/Normal")]
 public class Card : ScriptableObject {
@@ -123,6 +124,10 @@ public class Card : ScriptableObject {
     [Range(0, 2)]
     public int secondaryEffectSpeedType;
     #endregion
+
+
+
+
 
     public void OnSummon() {
         switch (effectOnSummon) {

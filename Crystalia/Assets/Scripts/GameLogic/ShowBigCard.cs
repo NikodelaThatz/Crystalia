@@ -16,7 +16,7 @@ public class ShowBigCard : MonoBehaviour {
         //TODO: HUD con tutti i riferimenti e effetti
     }
 
-    public void HdieGeneralCardInfo() {
+    public void HideGeneralCardInfo() {
         generalCard.enabled = false;
     }
     public void ShowClashCardInfo(Card currentCardToShow) {
@@ -25,7 +25,7 @@ public class ShowBigCard : MonoBehaviour {
         //TODO: HUD con tutti i riferimenti e effetti
     }
 
-    public void HdieClashCardInfo() {
+    public void HideClashCardInfo() {
         clashCard.enabled = false;
     }
 
